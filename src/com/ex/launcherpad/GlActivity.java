@@ -3,8 +3,7 @@ package com.ex.launcherpad;
 import java.util.Map;
 
 import com.ex.launcherpad.fragment.ExWidget;
-import com.ex.launcherpad.fragment.MainFragment;
-import com.launcher.pad.adapter.MainAdapter;
+
 
 import ex.widget.gl.photowall.Optimized2000PlanesFragment;
 import rajawali.RajawaliActivity;

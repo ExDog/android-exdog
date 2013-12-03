@@ -5,16 +5,16 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import ex.widget.gl.GlWorld;
 import android.app.Application;
+import ex.widget.gl.GlWorld;
 
 
 public class ExamplesApplication extends Application {
-
+		
 	static enum Category {
-
+		
 		// @formatter:off
-		GENERAL("General")
+			GENERAL("General")
 		, LIGHTS("Lights")
 		, INTERACTIVE("Interactive")
 		, UI("UI")
@@ -24,7 +24,7 @@ public class ExamplesApplication extends Application {
 		, MATERIALS("Materials")
 		, ABOUT("About");
 		// @formatter:on
-
+   
 		private String name;
 
 		Category(String name) {

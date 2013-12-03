@@ -6,6 +6,7 @@ import java.util.List;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import com.androidquery.util.AQUtility;
 import com.ex.launcherpad.R;
 import com.ex.launcherpad.R.drawable;
 import com.ex.launcherpad.R.id;
@@ -64,12 +65,14 @@ public abstract class SubjectFragment extends RajawaliFragment implements
 	 View bookView;
 	 View animationView;
 	 int animationTime=1000;
-	 
+	
+	 /**
+	  * 处理点击三维object点击事件的handler
+	  */
 	public Handler mHandler=new Handler()
 	{
 		public void handleMessage(Message msg) {
 			
-			Log.i("xia","msg::::::::::"+msg.what);
 			switch (msg.what) {
 			case -1:
 				if(bookView.getVisibility()==View.VISIBLE)
@@ -98,12 +101,50 @@ public abstract class SubjectFragment extends RajawaliFragment implements
 			default:
 				break;
 			}
-			
-			 
-			 super.handleMessage(msg);   
-		};
+		}
 	};
 	
+	 /*
+	 public Handler mHandler=new Handler()
+	 {
+		 public void handleMessage(Message msg) {
+			 AQUtility.debug("oncreate");
+			 switch (msg.what) {
+			case -1:
+				 mSurfaceView.setVisibility(View.VISIBLE);
+				bookView.setVisibility(View.GONE);
+				break;
+			case 1:
+				mSurfaceView.setVisibility(View.GONE);
+				bookView.setVisibility(View.VISIBLE);
+				break;
+				case 2:
+				mSurfaceView.setVisibility(View.GONE);
+				bookView.setVisibility(View.VISIBLE);
+				break;
+				case 3:
+				mSurfaceView.setVisibility(View.GONE);
+				bookView.setVisibility(View.VISIBLE);
+				break;
+				case 4:
+				mSurfaceView.setVisibility(View.GONE);
+				bookView.setVisibility(View.VISIBLE);
+				break;
+				case 5:
+				mSurfaceView.setVisibility(View.GONE);
+				bookView.setVisibility(View.VISIBLE);
+				break;
+				case 6:
+				mSurfaceView.setVisibility(View.GONE);
+				bookView.setVisibility(View.VISIBLE);
+				break;
+
+			default:
+				break;
+			}
+		 };
+	 };
+	 */
 	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -130,6 +171,7 @@ public abstract class SubjectFragment extends RajawaliFragment implements
 				.bringToFront();
 		mProgressBarLoader=new ProgressBar(getActivity());
 		mLayout.addView(mSurfaceView);
+		mLayout.setOnClickListener(this);
 		mLayout.addView(initBook2(),2);
 		mLayout.addView(initTest(),2);
 		return mLayout;
@@ -161,21 +203,22 @@ public abstract class SubjectFragment extends RajawaliFragment implements
 	{
 		bookView=new BookView(getActivity(),Constant.CHINESEBOOK);
 		bookView.setVisibility(View.GONE);
-		LayoutParams lp=new LayoutParams(800, 450);
+		LayoutParams lp=new LayoutParams(800, 600);
 		lp.gravity=Gravity.CENTER_HORIZONTAL;
-		lp.setMargins(0, 5, 0, 0);
+		lp.setMargins(0, 80, 0, 0);
 		bookView.setLayoutParams(lp);
+		bookView.setOnClickListener(this);
 		return bookView;
 	}
 	
 	public View initTest()
 	{
 		animationView=new ImageView(getActivity());
-		animationView.setBackgroundResource(R.drawable.chinesebook);
-		LayoutParams lp=new LayoutParams(800, 450);
+		animationView.setBackgroundResource(R.drawable.ex_animation_test);
+		LayoutParams lp=new LayoutParams(800, 600);
 		animationView.setVisibility(View.GONE);
 		lp.gravity=Gravity.CENTER_HORIZONTAL;
-		lp.setMargins(0, 5, 0, 0);
+		lp.setMargins(0, 80, 0, 0);
 		animationView.setLayoutParams(lp);
 		return animationView;
 	}
@@ -205,20 +248,20 @@ public abstract class SubjectFragment extends RajawaliFragment implements
             animation_scale.setDuration(animationTime); 
               
             L.d(""+animationView.getX());
-            animation_translate=new TranslateAnimation(0,0,400,5);  
+            //animation_translate=new TranslateAnimation(0,0,400,200);  
             
-            animation_translate.setDuration(animationTime);
+            //animation_translate.setDuration(animationTime);
               
             animationSet=new AnimationSet(true);  
             animationSet.addAnimation(animation_alpha);//透明度  
             animationSet.addAnimation(animation_scale);//尺寸伸缩  
-            animationSet.addAnimation(animation_translate);//移动  
+           // animationSet.addAnimation(animation_translate);//移动  
             animationSet.setAnimationListener(new AnimationListener() {
 				
 				@Override
 				public void onAnimationStart(Animation arg0) {
 					// TODO Auto-generated method stub
-					
+					mSurfaceView.setVisibility(View.GONE);
 				}
 				
 				@Override
@@ -258,14 +301,14 @@ public abstract class SubjectFragment extends RajawaliFragment implements
              
            //移动动画效果translate  
            L.d(""+animationView.getX());
-           animation_translate=new TranslateAnimation(0,0,5,400);  
-           animation_translate.setDuration(animationTime);//设置时间持续时间为 5000毫秒  
+          // animation_translate=new TranslateAnimation(0,0,5,400);  
+           //animation_translate.setDuration(animationTime);//设置时间持续时间为 5000毫秒  
              
            animationSet=new AnimationSet(true);  
              
            animationSet.addAnimation(animation_alpha);//透明度  
            animationSet.addAnimation(animation_scale);//尺寸伸缩  
-           animationSet.addAnimation(animation_translate);//移动  
+           //animationSet.addAnimation(animation_translate);//移动  
            animationSet.setAnimationListener(new AnimationListener() {
 				
 				@Override
@@ -273,6 +316,7 @@ public abstract class SubjectFragment extends RajawaliFragment implements
 					// TODO Auto-generated method stub
 					animationView.setVisibility(View.VISIBLE);
 					bookView.setVisibility(View.GONE);
+					mSurfaceView.setVisibility(View.VISIBLE);
 				}
 				
 				@Override
@@ -293,9 +337,15 @@ public abstract class SubjectFragment extends RajawaliFragment implements
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		
+		AQUtility.debug("onclick");
+		if(v instanceof FrameLayout)
+		{
+		Message msg=new Message();
+		msg.what=-1;
+		mHandler.sendMessage(msg);
 		}
+			// mSurfaceView.setVisibility(View.VISIBLE);
+			//	bookView.setVisibility(View.GONE);
 	}
 
 	@Override

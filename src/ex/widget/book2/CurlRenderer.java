@@ -83,6 +83,7 @@ public class CurlRenderer implements GLSurfaceView.Renderer {
 				Color.green(mBackgroundColor) / 255f,
 				Color.blue(mBackgroundColor) / 255f,
 				Color.alpha(mBackgroundColor) / 255f);
+				//0.5f);
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		gl.glLoadIdentity();
 

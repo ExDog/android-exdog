@@ -6,35 +6,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.androidquery.util.AQUtility;
 import com.ex.launcherpad.R;
 
-import ex.utils.Constant;
-import ex.utils.ReturnBitmap;
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import ex.utils.Constant;
+import ex.utils.ReturnBitmap;
 /**
  * 
 * @ClassName: BookFragment
@@ -75,7 +64,8 @@ public class BookView extends CurlView {
 		this.setPageProvider(pageProvider);
 		this.setSizeChangedObserver(new SizeChangedObserver());
 		this.setCurrentIndex(index);
-		this.setBackgroundColor(0xFF202830);
+		this.setBackgroundColor(0xFFFFFFFF);
+		this.setBackgroundResource(R.drawable.book_back);
 	}
 
 	
@@ -123,17 +113,11 @@ public class BookView extends CurlView {
 			Canvas c = new Canvas(b);
 			Bitmap bm;
 			bm= ReturnBitmap.decodeBitmap(bookPath+mBitmapIds.get(index).getName(), 0);
-			
-			
 			if(index%2==1)
 			{
 				bm=convert(bm,bm.getWidth(), bm.getHeight());
-				
 			}
-			
-		
 			BitmapDrawable d = new BitmapDrawable(bm);
-			
 			int margin = 7;
 			int border = 3;
 			Rect r = new Rect(margin, margin, width - margin, height - margin);
@@ -192,7 +176,7 @@ public class BookView extends CurlView {
 		@Override
 		public void updatePage(CurlPage page, int width, int height, int index) {
 			
-			Log.i("Jiangx", "index==:" + index);
+			AQUtility.debug("Jiangx", "index==:" + index);
 				if (index == (mBitmapIds.size()) / 2) {
 					Bitmap front = loadBitmap(width, height,
 							mBitmapIds.size() - 1);
@@ -204,11 +188,8 @@ public class BookView extends CurlView {
 					Bitmap back = loadBitmap(width, height, 2 * index + 1);
 					page.setTexture(front, CurlPage.SIDE_FRONT);
 					page.setTexture(back, CurlPage.SIDE_BACK);
-					
 				}
-		
 		}
-
 	}
 	
 

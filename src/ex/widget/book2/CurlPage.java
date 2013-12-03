@@ -1,5 +1,7 @@
 package ex.widget.book2;
 
+import com.ex.launcherpad.R;
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;

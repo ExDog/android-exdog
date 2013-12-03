@@ -3,27 +3,21 @@ package com.ex.launcherpad.fragment;
 
 
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 import javax.microedition.khronos.opengles.GL10;
 
 import rajawali.Object3D;
-import rajawali.animation.Animation3D;
 import rajawali.animation.Animation3D.RepeatMode;
-import rajawali.animation.EllipticalOrbitAnimation3D;
-import rajawali.animation.IAnimation3DListener;
 import rajawali.animation.RotateAnimation3D;
 import rajawali.lights.DirectionalLight;
 import rajawali.materials.Material;
 import rajawali.materials.methods.DiffuseMethod;
 import rajawali.materials.methods.SpecularMethod;
-import rajawali.materials.textures.AlphaMapTexture;
 import rajawali.materials.textures.ATexture.TextureException;
+import rajawali.materials.textures.SphereMapTexture;
+import rajawali.materials.textures.Texture;
 import rajawali.math.MathUtil;
-import rajawali.math.vector.Vector3;
 import rajawali.math.vector.Vector3.Axis;
 import rajawali.primitives.Sphere;
 import rajawali.util.ObjectColorPicker;
@@ -33,20 +27,25 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Bitmap.Config;
-import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.Toast;
+
+import com.ex.launcherpad.R;
 
 
 
+/**
+ * 
+* @ClassName: ExWidget
+* @Description: TODO(这里用一句话描述这个类的作用)
+* @author ExDog
+* @date 2013年12月2日 下午1:30:03
+*
+ */
 public class ExWidget extends SubjectFragment implements OnTouchListener{
 
 	DirectionalLightRenderer mDirectionalLightRenderer;
@@ -71,6 +70,9 @@ public class ExWidget extends SubjectFragment implements OnTouchListener{
 	}
 
 	@Override
+	/**
+	 * 是否让三维控件至顶 
+	 */
 	protected boolean isTransparentSurfaceView() {
 		return true;
 	}
@@ -78,9 +80,9 @@ public class ExWidget extends SubjectFragment implements OnTouchListener{
 	private final class DirectionalLightRenderer extends AExampleRenderer implements OnObjectPickedListener {
 		Sphere rootSphere;
 		//纹理bitmap
-		private Bitmap mTimeBitmap;
+		//private Bitmap mTimeBitmap;
 		private Canvas mItemCanvas;
-		private AlphaMapTexture mTimeTexture;
+		private SphereMapTexture mTimeTexture;
 		
 		
 		//内部控件列表
@@ -96,49 +98,44 @@ public class ExWidget extends SubjectFragment implements OnTouchListener{
 			list=new ArrayList<Object3D>();
 			mPicker = new ObjectColorPicker(this);
 			mPicker.setOnObjectPickedListener(this);
-			final DirectionalLight directionalLight = new DirectionalLight();
-			directionalLight.setPower(1.5f);
-			getCurrentScene().addLight(directionalLight);
-			getCurrentCamera().setPosition(0,0, 6);
+			//final DirectionalLight directionalLight = new DirectionalLight();
+			//directionalLight.setPower(1.5f);
+			//getCurrentScene().addLight(directionalLight);
+			getCurrentCamera().setPosition(0,5, 7);
 			getCurrentCamera().setLookAt(0, 0, 0);
 			
-			//纹理 
-			//InputStream is = getActivity().getResources().openRawResource(R.drawable.ic_launcher);    
-			//mTimeBitmap = BitmapFactory.decodeStream(is); 
-			//mTimeBitmap=BitmapFactory.decodeResource(getResources(), R.drawable.ic_drawer).copy(Bitmap.Config.ARGB_8888, true);
-			mTimeBitmap = Bitmap.createBitmap(256, 256, Config.ARGB_8888);
-			mTimeTexture = new AlphaMapTexture("timeTexture", mTimeBitmap);
-			
-			Material sphereMaterial = new Material();
-			SpecularMethod.Phong phongMethod = new SpecularMethod.Phong();
-			phongMethod.setShininess(180);
-			sphereMaterial.setDiffuseMethod(new DiffuseMethod.Lambert());
-			sphereMaterial.setSpecularMethod(phongMethod);
-			sphereMaterial.enableLighting(true);
-            
-			rootSphere = new Sphere(.2f, 20, 20);
-			rootSphere.setMaterial(sphereMaterial);
+			Material a = new Material();
+				try {
+					a.addTexture(new Texture("earthColors",
+							R.drawable.book_chinese));
+				} catch (TextureException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				a.setColorInfluence(0);
+				
+			rootSphere = new Sphere(.3f, 20, 20);
+						
+			rootSphere.setMaterial(a);
 			rootSphere.setRenderChildrenAsBatch(true);
 			rootSphere.setVisible(false);
-			rootSphere.setPosition(0,-1.3,0);
+			rootSphere.setPosition(0,1,0);
 			addChild(rootSphere);
-			try {
-				sphereMaterial.addTexture(mTimeTexture);
-			} catch (TextureException e) {
-				e.printStackTrace();
-			}
+
 			// -- inner ring
-			float radius = 2.5f;
+			float radius = 3.5f;
 			int count = 0;
-			for (int i = 0; i < 360; i += 64) {
+			for (int i = 0; i < 360; i += 40) {
 				double radians = MathUtil.degreesToRadians(i);
-				int color = 0xfed14f;
+				//int color = 0xfed14f;
 				count++;
-				Object3D sphere = rootSphere.clone(false);
+				//Object3D sphere = rootSphere.clone(false);
+				Sphere sphere = new Sphere(.3f, 20, 20);
 				sphere.setPosition((float) Math.sin(radians) * radius, 0,
 						(float) Math.cos(radians) * radius);
-				sphere.setMaterial(sphereMaterial);
-				sphere.setColor(color);
+				sphere.setMaterial(a);
+				
+				//sphere.setColor(color);
 				mPicker.registerObject(sphere);
 				list.add(sphere);
 				sphere.setName(String.valueOf(i/64));
@@ -153,7 +150,7 @@ public class ExWidget extends SubjectFragment implements OnTouchListener{
 				registerAnimation(anim);
 				anim.play();
 			}
-
+			//设置三维场景没有背景颜色
 			getCurrentScene().setBackgroundColor(0);
 		}
 		
@@ -173,61 +170,24 @@ public class ExWidget extends SubjectFragment implements OnTouchListener{
             setIsGeted(true);
 		}
 
-		
-		
-		public void updateTimeBitmap() {
-			new Thread(new Runnable() {
-				public void run() {
-					if (mItemCanvas == null) {
-
-						mItemCanvas = new Canvas(mTimeBitmap);
-						mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-						mTextPaint.setColor(Color.WHITE);
-						mTextPaint.setTextSize(75);
-						
-					}
-					//
-					// -- Clear the canvas, transparent
-					//
-					mItemCanvas.drawColor(0, Mode.CLEAR);
-					//
-					// -- Draw the time on the canvas
-					//
-					
-					mItemCanvas.drawText(("数  学"), 75,
-							128, mTextPaint);
-					//
-					// -- Indicates that the texture should be updated on the OpenGL thread.
-					//
-				
-				}
-			}).start();
-		}
-		
+		/**
+		 * 相当于平面中的ondraw函数
+		 */
 		public void onDrawFrame(GL10 glUnused) {
 			super.onDrawFrame(glUnused);
-			if (mFrameCount++ >= mFrameRate) {
-				mFrameCount = 0;
-				updateTimeBitmap();
+			if(isTurn)
+			{
+			mDirectionalLightRenderer.rootSphere.setRotY(mDirectionalLightRenderer.rootSphere.getRotY()-0.3);
 			}
-			//
-			// -- update the texture because it is ready
-			//
-		//	if (mShouldUpdateTexture) {
-				mTimeTexture.setBitmap(mTimeBitmap);
-				mTextureManager.replaceTexture(mTimeTexture);
-			//	mShouldUpdateTexture = false;
-			//}
-				if(isTurn==true)
-				{
-			//mDirectionalLightRenderer.rootSphere.setRotY(mDirectionalLightRenderer.rootSphere.getRotY()-1);
-				}
 		}
 		
 	}
 
 	private int mLastMotionX, mLastMotionY;
-	@Override
+
+	/**
+	 * 重写touch函数
+	 */
 	public boolean onTouch(View v, MotionEvent event) {
 		// TODO Auto-generated method stub\
 	
@@ -268,6 +228,14 @@ public class ExWidget extends SubjectFragment implements OnTouchListener{
 		return true;
 	}
 	
+	/**
+	 * 
+	* @Title: setIsGeted
+	* @Description: 描述是控制是否点中三维空间中的物体
+	* @param @param isGeted    yes 为选中
+	* @return void    无
+	* @throws
+	 */
 	private synchronized void setIsGeted(boolean isGeted)
 	{
 		isGeted=false;

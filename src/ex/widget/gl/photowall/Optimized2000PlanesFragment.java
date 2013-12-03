@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
+import com.androidquery.util.AQUtility;
 import com.ex.launcherpad.R;
 
 import ex.widget.gl.GlWorld;
@@ -102,9 +103,14 @@ public class Optimized2000PlanesFragment extends GlWorld {
 	}
 
 	@Override
+	protected boolean isTransparentSurfaceView() {
+		return true;
+	}
+	
+	@Override
 	public void onClick(DialogInterface arg0, int arg1) {
 		// TODO Auto-generated method stub
-		
+		AQUtility.debug(arg1);
 	}
 
 	

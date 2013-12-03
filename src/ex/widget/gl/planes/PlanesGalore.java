@@ -9,7 +9,6 @@ import rajawali.Geometry3D;
 import rajawali.Geometry3D.BufferType;
 import rajawali.Object3D;
 import rajawali.materials.Material;
-import rajawali.materials.methods.DiffuseMethod;
 import rajawali.math.vector.Vector3;
 import android.graphics.Color;
 import android.opengl.GLES20;

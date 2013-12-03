@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical" android:id="@+id/rl_mian_icons_main"
-    android:background="@drawable/back" >
+    >
  
    <GridView android:layout_marginTop="100dp" android:id="@+id/gv_main_icon"
         android:layout_width="1100dip" android:layout_height="wrap_content"

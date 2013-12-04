@@ -1,50 +1,47 @@
 package com.ex.launcherpad;
 
-import java.util.Map;
-
-import com.ex.launcherpad.fragment.ExWidget;
-
-
-import ex.widget.gl.photowall.Optimized2000PlanesFragment;
 import rajawali.RajawaliActivity;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListView;
-import android.widget.GridView;
-import android.widget.RelativeLayout;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ImageView;
-import android.widget.TextView;
+import ex.framwork.callback.BitmapAjaxCallback;
+import ex.framwork.util.ExUtility;
+import ex.widget.gl.universe.ExWidget;
 
-
+/**
+ * 
+* @ClassName: GlActivity
+* @Description: 启动类
+* @author ExDog love_mobile@163.com
+* @date 2013年12月3日 下午4:35:25
+*
+ */
 public class GlActivity extends RajawaliActivity {
 
 	private static final String FRAGMENT_TAG = "rajawali";
 	private DrawerLayout mDrawerLayout;
-
+    boolean init=false;
 	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		//设置启动信息
+		if(!init){
+			ExUtility.setDebug(true);
+			ExUtility.setCacheDir(null);
+			BitmapAjaxCallback.setPixelLimit(600 * 600);
+			BitmapAjaxCallback.setCacheLimit(200);
+			BitmapAjaxCallback.setIconCacheLimit(100);
+			BitmapAjaxCallback.setMaxPixelLimit(10000000);	// 
+			init = true;	
+			//ErrorReporter.installReporter(getApplicationContext());
+		}
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,  
                 WindowManager.LayoutParams. FLAG_FULLSCREEN);  
@@ -82,12 +79,13 @@ public class GlActivity extends RajawaliActivity {
 		
 	}
 
-	
-
 	/**
-	 * Launch a fragment selected from the drawer or at application start.
 	 * 
-	 * @param fragClass
+	* @Title: launchFragment
+	* @Description: launcher the fragment
+	* @param @param position    设定文件
+	* @return void    返回类型
+	* @throws
 	 */
 	@SuppressLint("NewApi")
 	private void launchFragment(int position) {

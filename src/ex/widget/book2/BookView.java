@@ -6,9 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.androidquery.util.AQUtility;
-import com.ex.launcherpad.R;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -17,11 +14,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
-import android.util.Log;
+
+import com.ex.launcherpad.R;
+
+import ex.framwork.util.ExUtility;
 import ex.utils.Constant;
 import ex.utils.ReturnBitmap;
 /**
@@ -50,11 +49,19 @@ public class BookView extends CurlView {
 		if(!path.isEmpty()){
 			bookPath=path;
 		}
-		
 		// TODO Auto-generated constructor stub
 	}
 	
-	
+	public void setBookPath(String path)
+	{
+		if(!path.isEmpty()){
+			bookPath=path;
+			//pageProvider = new PageProvider();
+			mBitmapIds = pageProvider.getFileList(bookPath);
+			//this.setPageProvider(pageProvider);
+		    this.setCurrentIndex(0);
+		}
+	}
 
 	public void onCreateView(){
 		pageProvider = new PageProvider();
@@ -176,7 +183,7 @@ public class BookView extends CurlView {
 		@Override
 		public void updatePage(CurlPage page, int width, int height, int index) {
 			
-			AQUtility.debug("Jiangx", "index==:" + index);
+			ExUtility.debug("Jiangx", "index==:" + index);
 				if (index == (mBitmapIds.size()) / 2) {
 					Bitmap front = loadBitmap(width, height,
 							mBitmapIds.size() - 1);

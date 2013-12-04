@@ -17,9 +17,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
-import com.androidquery.util.AQUtility;
 import com.ex.launcherpad.R;
 
+import ex.framwork.util.ExUtility;
 import ex.widget.gl.GlWorld;
 import ex.widget.gl.planes.PlanesGalore;
 import ex.widget.gl.planes.PlanesGaloreMaterialPlugin;
@@ -28,11 +28,11 @@ public class Optimized2000PlanesFragment extends GlWorld {
 
 	@SuppressLint("NewApi")
 	@Override
-	protected AExampleRenderer createRenderer() {
+	protected ExRenderer createRenderer() {
 		return new Optimized2000PlanesRenderer(getActivity());
 	}
 
-	public class Optimized2000PlanesRenderer extends AExampleRenderer {
+	public class Optimized2000PlanesRenderer extends ExRenderer {
 
 		private PlanesGalore mPlanes;
 		private long mStartTime;
@@ -110,7 +110,7 @@ public class Optimized2000PlanesFragment extends GlWorld {
 	@Override
 	public void onClick(DialogInterface arg0, int arg1) {
 		// TODO Auto-generated method stub
-		AQUtility.debug(arg1);
+		ExUtility.debug(arg1);
 	}
 
 	

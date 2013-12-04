@@ -46,10 +46,12 @@ OnClickListener {
 		mLayout.addView(mSurfaceView);
 		return mLayout;
 	}
+	
 	public void onClick(View v) {
 		switch (v.getId()) {
 		}
 	}
+	
 	@Override
 	public void onDestroy() {
 		try {
@@ -65,7 +67,7 @@ OnClickListener {
 	 *
 	 * @return
 	 */
-	protected abstract AExampleRenderer createRenderer();
+	protected abstract ExRenderer createRenderer();
 	protected void hideLoader() {
 		//mProgressBarLoader.post(new Runnable() {
 		
@@ -76,8 +78,8 @@ OnClickListener {
 	protected void showLoader() {
 	
 	}
-	protected abstract class AExampleRenderer extends RajawaliRenderer {
-		public AExampleRenderer(Context context) {
+	protected abstract class ExRenderer extends RajawaliRenderer {
+		public ExRenderer(Context context) {
 			super(context);
 			setFrameRate(60);
 		}
@@ -97,4 +99,6 @@ OnClickListener {
 			stopRendering();
 		}
 	}
+	
+	
 }

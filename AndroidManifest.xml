@@ -11,7 +11,9 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:largeHeap="true"
+         >
         <activity
             android:name="com.ex.launcherpad.GlActivity"
             >

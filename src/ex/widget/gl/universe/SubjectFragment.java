@@ -1,8 +1,5 @@
 package ex.widget.gl.universe;
 
-
-import java.lang.Character.UnicodeBlock;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,6 +30,14 @@ import ex.widget.book2.BookView;
 import ex.widget.gl.GlWorld;
 
 @SuppressLint("NewApi")
+/**
+ * 
+* @ClassName: SubjectFragment
+* @Description: TODO  1.学科界面三维现实 2.学科界面书籍显示  3.学科界面书籍动画
+* @author ExDog love_mobile@163.com
+* @date 2013年12月5日 下午3:32:40
+*
+ */
 public abstract class SubjectFragment extends GlWorld implements
 		OnClickListener {
 	//关于书
@@ -201,6 +206,14 @@ public abstract class SubjectFragment extends GlWorld implements
             animationView.startAnimation(animationSet);//开始播放  
 	}
 	
+	/**
+	 * 
+	* @Title: hide
+	* @Description: 书隐藏
+	* @param     设定文件
+	* @return void    返回类型
+	* @throws
+	 */
 	public void hide()
 	{
 		   //透明度控制动画效果 alpha  
@@ -260,16 +273,22 @@ public abstract class SubjectFragment extends GlWorld implements
 
 	@Override
 	public void onClick(View v) {
-			if(v instanceof FrameLayout)
+		if(v instanceof FrameLayout)
 		{
-		Message msg=new Message();
-		msg.what=-1;
-		mHandler.sendMessage(msg);
+			Message msg=new Message();
+			msg.what=-1;
+			mHandler.sendMessage(msg);
 		}
-			// mSurfaceView.setVisibility(View.VISIBLE);
-			//	bookView.setVisibility(View.GONE);
 	}
-	
+
+	/**
+	 * 
+	* @Title: setSphereVisible
+	* @Description: 设置书是否可见的借口，在子类中调用
+	* @param @param isVisible    设定文件
+	* @return void    返回类型
+	* @throws
+	 */
 	public abstract void setSphereVisible(boolean isVisible);
 
 }
